@@ -1,0 +1,7 @@
+Resumo dos Passos:
+Instalar e configurar o InfluxDB no Linux.
+Instalar e configurar o Grafana no Linux.
+Adicionar o InfluxDB como fonte de dados no Grafana.
+Criar um dashboard no Grafana para visualizar os dados.
+Configurar o código Python para enviar dados para o InfluxDB.
+Seguindo esses passos, você terá um sistema completo de monitoramento em tempo real para o seu biofiltro inteligente de metano. 
