@@ -1,0 +1,84 @@
+Configurar o Grafana em um sistema Linux e integrá-lo com o InfluxDB para monitorar os dados do sensor de metano. Aqui estão os passos detalhados:
+
+Configuração do InfluxDB no Linux
+
+
+1. Instale o InfluxDB:
+Abra o terminal.
+Adicione a chave GPG do InfluxDB:
+wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+
+Adicione o repositório do InfluxDB:
+
+source /etc/os-release
+echo "deb https://repos.influxdata.com/${ID} ${VERSION_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+
+Atualize os pacotes e instale o InfluxDB:
+sudo apt-get update
+sudo apt-get install influxdb
+
+Inicie o serviço do InfluxDB:
+sudo systemctl start influxdb
+sudo systemctl enable influxdb
+
+
+2. Configure o InfluxDB:
+
+Abra o terminal e conecte-se ao InfluxDB:
+influx
+
+Crie um banco de dados:
+CREATE DATABASE biofiltro
+
+Verifique se o banco de dados foi criado:
+SHOW DATABASES
+
+Configuração do Grafana no Linux
+
+1. Instale o Grafana:
+
+Abra o terminal.
+
+Adicione a chave GPG do Grafana:
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+
+Adicione o repositório do Grafana:
+echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee /etc/apt/sources.list.d/grafana.list
+
+Atualize os pacotes e instale o Grafana:
+sudo apt-get update
+sudo apt-get install grafana
+
+Inicie o serviço do Grafana:
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server
+
+Acesse o Grafana no navegador:
+
+Abra o navegador e vá para http://localhost:3000.
+Faça login com o usuário e senha padrão (admin / admin).
+
+2. Configure o Data Source no Grafana:
+
+No painel do Grafana, clique em “Configuration” (ícone de engrenagem) e depois em “Data Sources”.
+Clique em “Add data source” e selecione “InfluxDB”.
+Configure as seguintes opções:
+URL: http://localhost:8086
+Database: biofiltro
+User: (deixe em branco se não configurou autenticação)
+Password: (deixe em branco se não configurou autenticação)
+Clique em “Save & Test” para verificar a conexão.
+
+3. Crie um Dashboard no Grafana:
+
+Clique no ícone de “+” no painel esquerdo e selecione “Create” > “Dashboard”.
+Clique em “Add new panel”.
+Configure a consulta para buscar os dados do InfluxDB:
+From: biofiltro
+Measurement: methane_levels
+Field: methane
+Ajuste as opções de visualização conforme necessário.
+Clique em “Apply” para salvar o painel.
+Integração com o Código Python
+Certifique-se de que o código Python está configurado para enviar dados para o InfluxDB
+
